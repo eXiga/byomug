@@ -1,57 +1,53 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/rendering.dart';
 
-import 'generate.dart';
-import 'scan.dart';
+import 'map.dart';
 
-class HomeScreen extends StatelessWidget {
+class HomeScreen extends StatefulWidget {
+  @override
+  _HomeScreenState createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+  static const MAP_INDEX = 1;
+
+  int selectedIndex = 0;
+
+  void onItemTapped(int index) {
+    setState(() {
+      selectedIndex = index;
+    });
+  }
+
+  Widget getBody() {
+    if (MAP_INDEX == selectedIndex) {
+      return MapWidget();
+    } else {
+      return Center(child: Text('Home'));
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-        appBar: AppBar(
-          centerTitle: true,
-          title: Text('QR Code Scanner & Generator'),
-        ),
-        body: Center(
-            child:
-              Column(
-                mainAxisAlignment: MainAxisAlignment.center,
-                crossAxisAlignment: CrossAxisAlignment.stretch,
-                children: <Widget>[
-                  Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                      child: RaisedButton(
-                          color: Colors.blue,
-                          textColor: Colors.white,
-                          splashColor: Colors.blueGrey,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => ScanScreen()),
-                            );
-                          },
-                          child: const Text('SCAN QR CODE')
-                      ),
-                    ),
-                   Padding(
-                      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
-                      child: RaisedButton(
-                          color: Colors.blue,
-                          textColor: Colors.white,
-                          splashColor: Colors.blueGrey,
-                          onPressed: () {
-                            Navigator.push(
-                              context,
-                              MaterialPageRoute(builder: (context) => GenerateScreen()),
-                            );
-                          },
-                          child: const Text('GENERATE QR CODE')
-                      ),
-                    ),
-                ],
-              )
+      appBar: AppBar(
+        title: const Text('byomug'),
+      ),
+      body: getBody(),
+      bottomNavigationBar: BottomNavigationBar(
+        items: const <BottomNavigationBarItem>[
+          BottomNavigationBarItem(
+            icon: Icon(Icons.home),
+            title: Text('Home'),
           ),
-        );
+          BottomNavigationBarItem(
+            icon: Icon(Icons.map),
+            title: Text('Map'),
+          ),
+        ],
+        currentIndex: selectedIndex,
+        selectedItemColor: Colors.green,
+        onTap: onItemTapped,
+      ),
+    );
   }
 }
