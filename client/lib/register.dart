@@ -1,27 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:byomug/widgets/card.dart';
 
-class LoginPage extends StatefulWidget {
-  LoginPage({Key key, this.title}) : super(key: key);
+class RegistrationPage extends StatefulWidget {
+  RegistrationPage({Key key, this.title}) : super(key: key);
 
   final String title;
 
   @override
-  _LoginPageState createState() => _LoginPageState();
+  _RegistrationPageState createState() => _RegistrationPageState();
 }
 
-class _LoginPageState extends State<LoginPage> {
+class _RegistrationPageState extends State<RegistrationPage> {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      appBar: AppBar(title: Text("Registration")),
       body: Container(
-        decoration: BoxDecoration(
-          image: DecorationImage(
-            image: AssetImage('assets/logo.png'),
-            fit: BoxFit.cover
-          )
-        ),
         child: Padding(
           padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 60.0, bottom: 15.0),
           child: Column(
@@ -30,9 +25,9 @@ class _LoginPageState extends State<LoginPage> {
                 height: 100,
               ),
               FormCard(
-                title: 'Login', 
-                opacity: 0.25,
-                 backgroundColor: Colors.green
+                title: "Create new user", 
+                opacity: 1.0, 
+                backgroundColor: Colors.white
               ),
               SizedBox(
                 height: 20,
@@ -60,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
                         Navigator.pushReplacementNamed(context, '/home');
                       },
                       child: Center(
-                        child: Text("Sign in",
+                        child: Text("Register",
                             style: TextStyle(
                                 color: Colors.white,
                                 fontFamily: "AT",
@@ -71,38 +66,6 @@ class _LoginPageState extends State<LoginPage> {
                   ),
                 ),
               ),
-              Expanded(
-                child: Align(
-                  alignment: Alignment.bottomCenter,
-                  child: Row(
-                    mainAxisAlignment: MainAxisAlignment.center,
-                    children: <Widget>[
-                      Text('Not user yet?', 
-                        style: TextStyle(
-                          color: Colors.green,
-                          fontFamily: "AT",
-                          fontSize: 22
-                        ),
-                      ),
-                      Text(' '),
-                      InkWell(
-                        onTap: () {
-                          Navigator.pushNamed(context, '/register');
-                        },
-                        child: Text(
-                          "Sign up!",
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontFamily: "AT",
-                            fontWeight: FontWeight.bold,
-                            fontSize: 22
-                          )
-                        ),
-                      )
-                    ],
-                  )
-                )
-              )
             ]
           )
         )

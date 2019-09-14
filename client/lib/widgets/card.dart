@@ -1,13 +1,24 @@
 import 'package:flutter/material.dart';
 
 class FormCard extends StatelessWidget {
+  FormCard({
+      Key key, 
+      this.title, 
+      this.opacity, 
+      this.backgroundColor
+    }): super(key: key);
+
+  final String title;
+  final double opacity;
+  final Color backgroundColor;
+
   @override
   Widget build(BuildContext context) {
     return new Container(
       width: double.infinity,
       height: 220,
       decoration: BoxDecoration(
-          color: Colors.green.withOpacity(.25),
+          color: this.backgroundColor.withOpacity(this.opacity),
           borderRadius: BorderRadius.circular(8.0),
           boxShadow: [
             BoxShadow(
@@ -24,7 +35,7 @@ class FormCard extends StatelessWidget {
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.start,
           children: <Widget>[
-            Text("Login",
+            Text(this.title,
                 style: TextStyle(
                   color: Colors.green,
                   fontSize: 23,
