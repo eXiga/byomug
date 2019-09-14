@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
+import 'package:http/http.dart' as http;
 import 'package:byomug/widgets/card.dart';
+import 'package:byomug/models/user.dart';
 
 class RegistrationPage extends StatefulWidget {
   RegistrationPage({Key key, this.title}) : super(key: key);
@@ -11,6 +15,18 @@ class RegistrationPage extends StatefulWidget {
 }
 
 class _RegistrationPageState extends State<RegistrationPage> {
+
+  final userNameFieldController = TextEditingController();
+  final passwordFieldController = TextEditingController();
+
+  @override
+  void dispose() {
+    this.userNameFieldController.dispose();
+    this.passwordFieldController.dispose();
+    super.dispose();
+  }
+
+
 
   @override
   Widget build(BuildContext context) {
@@ -27,7 +43,9 @@ class _RegistrationPageState extends State<RegistrationPage> {
               FormCard(
                 title: "Create new user", 
                 opacity: 1.0, 
-                backgroundColor: Colors.white
+                backgroundColor: Colors.white,
+                userNameFieldController: this.userNameFieldController,
+                passwordFieldController: this.passwordFieldController,
               ),
               SizedBox(
                 height: 20,
@@ -52,6 +70,11 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     color: Colors.transparent,
                     child: InkWell(
                       onTap: () {
+                        var user = User(
+                          username: this.userNameFieldController.text,
+                          password: this.passwordFieldController.text
+                          );
+                        registerUser(user.toJson());
                         Navigator.pushReplacementNamed(context, '/home');
                       },
                       child: Center(
@@ -71,5 +94,17 @@ class _RegistrationPageState extends State<RegistrationPage> {
         )
       ),
     );
+  }
+}
+
+Future<User> registerUser(Map body) async {
+  final response = await http.post(
+    'https://byomug.herokuapp.com/users/register',  body: body);
+
+  if (response.statusCode != 200) {
+    throw Exception("ERROR");
+  } else {
+    var user = User.fromJson(json.decode(response.body));
+    return user;
   }
 }

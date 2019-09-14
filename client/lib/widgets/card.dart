@@ -5,12 +5,16 @@ class FormCard extends StatelessWidget {
       Key key, 
       this.title, 
       this.opacity, 
-      this.backgroundColor
+      this.backgroundColor,
+      this.userNameFieldController,
+      this.passwordFieldController
     }): super(key: key);
 
   final String title;
   final double opacity;
   final Color backgroundColor;
+  final TextEditingController userNameFieldController;
+  final TextEditingController passwordFieldController;
 
   @override
   Widget build(BuildContext context) {
@@ -51,6 +55,7 @@ class FormCard extends StatelessWidget {
                   fontSize: 20)
             ),
             TextField(
+              controller: this.userNameFieldController,
               decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(
                   borderSide: BorderSide(color: Colors.green)
@@ -72,6 +77,7 @@ class FormCard extends StatelessWidget {
                 )
             ),
             TextField(
+              controller: this.passwordFieldController,
               obscureText: true,
               decoration: InputDecoration(
                 enabledBorder: UnderlineInputBorder(

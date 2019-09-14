@@ -27,6 +27,7 @@ dependencies:
   barcode_scan: ^1.0.0
   qr_flutter: ^3.0.1
   google_maps_flutter: ^0.5.21
+  http: ^0.12.0+2
 
 dev_dependencies:
   flutter_test:
