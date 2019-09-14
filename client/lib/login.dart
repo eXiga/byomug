@@ -104,9 +104,9 @@ class _LoginPageState extends State<LoginPage> {
                         });
                         
                         if (user.isHost) {
-                          Navigator.pushNamed(context, '/home_host');
+                          Navigator.pushReplacementNamed(context, '/home_host');
                         } else {
-                          Navigator.pushNamed(context, '/home_client');
+                          Navigator.pushReplacementNamed(context, '/home_client');
                         }
                           
                       },
