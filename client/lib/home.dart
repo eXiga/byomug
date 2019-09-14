@@ -1,4 +1,4 @@
-import 'package:byomug/model/host.dart';
+import 'package:byomug/models/host.dart';
 import 'package:flutter/material.dart';
 
 import 'map.dart';

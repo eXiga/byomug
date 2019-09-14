@@ -1,6 +1,6 @@
 import 'dart:async';
 
-import 'package:byomug/model/host.dart';
+import 'package:byomug/models/host.dart';
 import 'package:flutter/material.dart';
 import 'package:google_maps_flutter/google_maps_flutter.dart';
 

@@ -3,7 +3,7 @@ import 'dart:convert';
 import 'package:flutter/material.dart';
 import 'package:http/http.dart' as http;
 import 'package:byomug/widgets/card.dart';
-import 'package:byomug/models/user.dart';
+import 'package:byomug/models/client.dart';
 
 class RegistrationPage extends StatefulWidget {
   RegistrationPage({Key key, this.title}) : super(key: key);
@@ -70,7 +70,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     color: Colors.transparent,
                     child: InkWell(
                       onTap: () {
-                        var user = User(
+                        var user = Client(
                           username: this.userNameFieldController.text,
                           password: this.passwordFieldController.text
                           );
@@ -97,14 +97,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 }
 
-Future<User> registerUser(Map body) async {
+Future<Client> registerUser(Map body) async {
   final response = await http.post(
     'https://byomug.herokuapp.com/users/register',  body: body);
 
   if (response.statusCode != 200) {
     throw Exception("ERROR");
   } else {
-    var user = User.fromJson(json.decode(response.body));
+    var user = Client.fromJson(json.decode(response.body));
     return user;
   }
 }

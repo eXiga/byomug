@@ -1,12 +1,12 @@
-class User {
+class Client {
   final String username;
   final String token;
   final String id;
   final String password;
 
-  User({this.username, this.token, this.id, this.password});
+  Client({this.username, this.token, this.id, this.password});
 
-  User.fromJson(Map<String, dynamic> json)
+  Client.fromJson(Map<String, dynamic> json)
     : username = json['username'],
       id = json['_id'],
       token = json['token'],
