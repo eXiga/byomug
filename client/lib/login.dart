@@ -95,20 +95,38 @@ class _LoginPageState extends State<LoginPage> {
                           password: this.passwordFieldController.text
                         ).toJson();
 
-
-                        var user = await authenticateUser(string, () {
+                        try {
+                          var user = await authenticateUser(string);
                           setState(() {
                             isLoading = false;
-                            Navigator.pop(context);
                           });
-                        });
-                        
-                        if (user.isHost) {
-                          Navigator.pushReplacementNamed(context, '/home_host');
-                        } else {
-                          Navigator.pushReplacementNamed(context, '/home_client');
-                        }
-                          
+                          if (user.isHost) {
+                            Navigator.pushReplacementNamed(context, '/home_host');
+                          } else {
+                            Navigator.pushReplacementNamed(context, '/home_client');
+                          }
+                        } catch (e) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('Something went wrong :('),
+                                content: Text('Request failed'),
+                                actions: <Widget>[
+                                  new FlatButton(
+                                    child: Text('Ok'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  )
+                                ],
+                              );
+                            }
+                          );
+                        }  
                       },
                       child: Center(
                         child: Text("Sign in",
@@ -167,15 +185,14 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-Future<Client> authenticateUser(Map body, void Function() fn) async {
+Future<Client> authenticateUser(Map body) async {
   final response = await http.post(
     'https://byomug.herokuapp.com/users/authenticate',  body: body);
 
   if (response.statusCode != 200) {
-    throw Exception("ERROR");
+    throw('request failed :(');
   } else {
     var user = Client.fromJson(json.decode(response.body));
-    fn();
     return user;
   }
 }

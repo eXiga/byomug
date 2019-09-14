@@ -87,20 +87,44 @@ class _RegistrationPageState extends State<RegistrationPage> {
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      onTap: () {
+                      onTap: () async {
                         setState(() {
                           isLoading = true;
                         });
-                        var user = Client(
+                        var string = Client(
                           name: this.userNameFieldController.text,
                           password: this.passwordFieldController.text
-                          );
-                        registerUser(user.toJson(), () {
+                        ).toJson();
+
+                        try {
+                          var user = await registerUser(string);
                           setState(() {
                             isLoading = false;
-                            Navigator.pop(context);
                           });
-                        });
+                          Navigator.pushReplacementNamed(context, '/home_client');
+                        } catch (e) {
+                          setState(() {
+                            isLoading = false;
+                          });
+                          showDialog(
+                            context: context,
+                            builder: (context) {
+                              return AlertDialog(
+                                title: Text('Something went wrong :('),
+                                content: Text('Request failed'),
+                                actions: <Widget>[
+                                  new FlatButton(
+                                    child: Text('Ok'),
+                                    onPressed: () {
+                                      Navigator.of(context).pop();
+                                    },
+                                  )
+                                ],
+                              );
+                            }
+                          );
+                        }
+                        
                       },
                       child: Center(
                         child: Text("Register",
@@ -127,15 +151,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
   }
 }
 
-Future<Client> registerUser(Map body, void Function() fn) async {
+Future<Client> registerUser(Map body) async {
   final response = await http.post(
     'https://byomug.herokuapp.com/users/register',  body: body);
 
   if (response.statusCode != 200) {
-    throw Exception("ERROR");
+    throw('request failed :(');
   } else {
     var user = Client.fromJson(json.decode(response.body));
-    fn();
     return user;
   }
 }
