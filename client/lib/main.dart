@@ -1,13 +1,15 @@
-import 'package:byomug/home.dart';
-import 'package:byomug/register.dart';
 import 'package:flutter/material.dart';
-import 'package:byomug/login.dart';
+
+import 'home-client.dart';
+import 'home-host.dart';
+import 'login.dart';
+import 'register.dart';
 
 void main() => runApp(MaterialApp(
       initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
-        '/home': (context) => HomeScreen(),
+        '/home': (context) => HomeHostScreen(),
         '/register': (context) => RegistrationPage()
       },
       title: 'byomug',

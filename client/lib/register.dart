@@ -92,7 +92,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                           isLoading = true;
                         });
                         var user = Client(
-                          username: this.userNameFieldController.text,
+                          name: this.userNameFieldController.text,
                           password: this.passwordFieldController.text
                           );
                         registerUser(user.toJson(), () {

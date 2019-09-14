@@ -1,14 +1,15 @@
 import 'package:byomug/models/host.dart';
 import 'package:flutter/material.dart';
 
-import 'map.dart';
+import 'widgets/map.dart';
+import 'widgets/qr-code-display.dart';
 
-class HomeScreen extends StatefulWidget {
+class HomeClientScreen extends StatefulWidget {
   @override
-  _HomeScreenState createState() => _HomeScreenState();
+  _HomeClientScreenState createState() => _HomeClientScreenState();
 }
 
-class _HomeScreenState extends State<HomeScreen> {
+class _HomeClientScreenState extends State<HomeClientScreen> {
   static const MAP_INDEX = 1;
 
   int selectedIndex = 0;
@@ -27,7 +28,8 @@ class _HomeScreenState extends State<HomeScreen> {
       hosts.add(Host('3', 'Caffe Nero', 52.157802, 21.032832));
       return MapWidget(hosts: hosts);
     } else {
-      return Center(child: Text('Home'));
+      String id = '1';
+      return QrCodeDisplayWidget(id: id);
     }
   }
 
