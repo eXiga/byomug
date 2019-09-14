@@ -1,5 +1,9 @@
+import 'dart:convert';
+
 import 'package:flutter/material.dart';
 import 'package:byomug/widgets/card.dart';
+import 'package:byomug/models/client.dart';
+import 'package:http/http.dart' as http;
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -12,8 +16,31 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  @override
-  Widget build(BuildContext context) {
+  final userNameFieldController = TextEditingController();
+  final passwordFieldController = TextEditingController();
+  var isLoading = false;
+
+  Widget get _pageToDisplay {
+    if (isLoading) {
+      return _loadingView;
+    } else {
+      return _page;
+    }
+  }
+
+  Widget get _loadingView {
+    return Scaffold(
+      appBar: AppBar(title: Text('Registration')),
+      backgroundColor: Colors.white,
+      body: Container(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
+  }
+
+  Widget get _page {
     return Scaffold(
       body: Container(
         decoration: BoxDecoration(
@@ -32,7 +59,9 @@ class _LoginPageState extends State<LoginPage> {
               FormCard(
                 title: 'Login', 
                 opacity: 0.8,
-                 backgroundColor: Colors.white
+                 backgroundColor: Colors.white,
+                 userNameFieldController: this.userNameFieldController,
+                 passwordFieldController: this.passwordFieldController
               ),
               SizedBox(
                 height: 20,
@@ -56,8 +85,30 @@ class _LoginPageState extends State<LoginPage> {
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
-                      onTap: () {
-                        Navigator.pushReplacementNamed(context, '/home');
+                      onTap: () async {
+                        setState(() {
+                          isLoading = true;
+                        });
+
+                        var string = Client(
+                          name: this.userNameFieldController.text,
+                          password: this.passwordFieldController.text
+                        ).toJson();
+
+
+                        var user = await authenticateUser(string, () {
+                          setState(() {
+                            isLoading = false;
+                            Navigator.pop(context);
+                          });
+                        });
+                        
+                        if (user.isHost) {
+                          Navigator.pushNamed(context, '/home_host');
+                        } else {
+                          Navigator.pushNamed(context, '/home_client');
+                        }
+                          
                       },
                       child: Center(
                         child: Text("Sign in",
@@ -108,5 +159,23 @@ class _LoginPageState extends State<LoginPage> {
         )
       ),
     );
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return _pageToDisplay;
+  }
+}
+
+Future<Client> authenticateUser(Map body, void Function() fn) async {
+  final response = await http.post(
+    'https://byomug.herokuapp.com/users/authenticate',  body: body);
+
+  if (response.statusCode != 200) {
+    throw Exception("ERROR");
+  } else {
+    var user = Client.fromJson(json.decode(response.body));
+    fn();
+    return user;
   }
 }

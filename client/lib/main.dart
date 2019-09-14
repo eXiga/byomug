@@ -9,7 +9,8 @@ void main() => runApp(MaterialApp(
       initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
-        '/home': (context) => HomeHostScreen(),
+        '/home_host': (context) => HomeHostScreen(),
+        '/home_client': (context) => HomeClientScreen(),
         '/register': (context) => RegistrationPage()
       },
       title: 'byomug',
