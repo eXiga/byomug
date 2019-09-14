@@ -31,8 +31,8 @@ class _LoginPageState extends State<LoginPage> {
               ),
               FormCard(
                 title: 'Login', 
-                opacity: 0.25,
-                 backgroundColor: Colors.green
+                opacity: 0.8,
+                 backgroundColor: Colors.white
               ),
               SizedBox(
                 height: 20,
@@ -79,7 +79,7 @@ class _LoginPageState extends State<LoginPage> {
                     children: <Widget>[
                       Text('Not user yet?', 
                         style: TextStyle(
-                          color: Colors.green,
+                          color: Colors.black,
                           fontFamily: "AT",
                           fontSize: 22
                         ),
@@ -92,7 +92,7 @@ class _LoginPageState extends State<LoginPage> {
                         child: Text(
                           "Sign up!",
                           style: TextStyle(
-                            color: Colors.green,
+                            color: Colors.black,
                             fontFamily: "AT",
                             fontWeight: FontWeight.bold,
                             fontSize: 22
