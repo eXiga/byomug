@@ -34,14 +34,11 @@ class _LoginPageState extends State<LoginPage> {
                       )
                     ],
                   ),
-                  SizedBox(
-                    height: 160,
-                  ),
                   FormCard(),
                   SizedBox(
                     height: 30,
                   ),
-                   InkWell(
+                  InkWell(
                     child: Container(
                       width: double.infinity,
                       height: 50,
@@ -68,12 +65,37 @@ class _LoginPageState extends State<LoginPage> {
                                 style: TextStyle(
                                     color: Colors.white,
                                     fontFamily: "AT",
-                                    fontSize: 22,
-                                    letterSpacing: 1.0)),
+                                    fontSize: 22)
+                                ),
                           ),
                         ),
                       ),
                     ),
+                  ),
+                  Row(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: <Widget>[
+                      Text('Not user yet?', 
+                        style: TextStyle(
+                          color: Colors.green,
+                          fontFamily: "AT",
+                          fontSize: 22
+                        ),
+                      ),
+                      Text(' '),
+                      InkWell(
+                        onTap: () {},
+                        child: Text(
+                          "Sign up!",
+                          style: TextStyle(
+                            color: Colors.green,
+                            fontFamily: "AT",
+                            fontWeight: FontWeight.bold,
+                            fontSize: 22
+                          )
+                        ),
+                      )
+                    ],
                   )
                 ]
               )
