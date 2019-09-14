@@ -1,35 +1,57 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/rendering.dart';
 
-class HomePage extends StatefulWidget {
-  HomePage({Key key, this.title}) : super(key: key);
+import 'generate.dart';
+import 'scan.dart';
 
-  final String title;
-
-  @override
-  _HomePageState createState() => _HomePageState();
-}
-
-class _HomePageState extends State<HomePage> {
+class HomeScreen extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(title: Text("Welcome")),
-      body: Center(
-        child: Container (
-          color: Colors.white,
-          child: Padding(
-            padding: const EdgeInsets.all(36.0),
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.center,
-              mainAxisAlignment: MainAxisAlignment.center,
-              children: <Widget>[
-                Text("LOL")
-              ],
-            ),
-          ),
+        appBar: AppBar(
+          centerTitle: true,
+          title: Text('QR Code Scanner & Generator'),
         ),
-      ),
-    );
+        body: Center(
+            child:
+              Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                crossAxisAlignment: CrossAxisAlignment.stretch,
+                children: <Widget>[
+                  Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                      child: RaisedButton(
+                          color: Colors.blue,
+                          textColor: Colors.white,
+                          splashColor: Colors.blueGrey,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => ScanScreen()),
+                            );
+                          },
+                          child: const Text('SCAN QR CODE')
+                      ),
+                    ),
+                   Padding(
+                      padding: EdgeInsets.symmetric(vertical: 8.0, horizontal: 16.0),
+                      child: RaisedButton(
+                          color: Colors.blue,
+                          textColor: Colors.white,
+                          splashColor: Colors.blueGrey,
+                          onPressed: () {
+                            Navigator.push(
+                              context,
+                              MaterialPageRoute(builder: (context) => GenerateScreen()),
+                            );
+                          },
+                          child: const Text('GENERATE QR CODE')
+                      ),
+                    ),
+                ],
+              )
+          ),
+        );
   }
 }
