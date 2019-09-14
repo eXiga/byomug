@@ -18,6 +18,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
 
   final userNameFieldController = TextEditingController();
   final passwordFieldController = TextEditingController();
+  var isLoading = false;
 
   @override
   void dispose() {
@@ -26,10 +27,27 @@ class _RegistrationPageState extends State<RegistrationPage> {
     super.dispose();
   }
 
+  Widget get _pageToDisplay {
+    if (isLoading) {
+      return _loadingView;
+    } else {
+      return _page;
+    }
+  }
 
+  Widget get _loadingView {
+    return Scaffold(
+      appBar: AppBar(title: Text('Registration')),
+      backgroundColor: Colors.white,
+      body: Container(
+        child: Center(
+          child: CircularProgressIndicator(),
+        ),
+      ),
+    );
+  }
 
-  @override
-  Widget build(BuildContext context) {
+  Widget get _page {
     return Scaffold(
       appBar: AppBar(title: Text("Registration")),
       body: Container(
@@ -70,12 +88,19 @@ class _RegistrationPageState extends State<RegistrationPage> {
                     color: Colors.transparent,
                     child: InkWell(
                       onTap: () {
+                        setState(() {
+                          isLoading = true;
+                        });
                         var user = Client(
                           username: this.userNameFieldController.text,
                           password: this.passwordFieldController.text
                           );
-                        registerUser(user.toJson());
-                        Navigator.pushReplacementNamed(context, '/home');
+                        registerUser(user.toJson(), () {
+                          setState(() {
+                            isLoading = false;
+                            Navigator.pop(context);
+                          });
+                        });
                       },
                       child: Center(
                         child: Text("Register",
@@ -95,9 +120,14 @@ class _RegistrationPageState extends State<RegistrationPage> {
       ),
     );
   }
+
+  @override
+  Widget build(BuildContext context) {
+    return _pageToDisplay;
+  }
 }
 
-Future<Client> registerUser(Map body) async {
+Future<Client> registerUser(Map body, void Function() fn) async {
   final response = await http.post(
     'https://byomug.herokuapp.com/users/register',  body: body);
 
@@ -105,6 +135,7 @@ Future<Client> registerUser(Map body) async {
     throw Exception("ERROR");
   } else {
     var user = Client.fromJson(json.decode(response.body));
+    fn();
     return user;
   }
 }
