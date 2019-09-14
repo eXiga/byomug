@@ -1,3 +1,4 @@
+import 'package:byomug/model/host.dart';
 import 'package:flutter/material.dart';
 
 import 'map.dart';
@@ -20,7 +21,9 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget getBody() {
     if (MAP_INDEX == selectedIndex) {
-      return MapWidget();
+      List<Host> hosts = List();
+      hosts.add(Host('1', 'Starbucks', 52.1120584, 20.8274313));
+      return MapWidget(hosts: hosts);
     } else {
       return Center(child: Text('Home'));
     }
