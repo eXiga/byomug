@@ -22,7 +22,9 @@ class _HomeScreenState extends State<HomeScreen> {
   Widget getBody() {
     if (MAP_INDEX == selectedIndex) {
       List<Host> hosts = List();
-      hosts.add(Host('1', 'Starbucks', 52.1120584, 20.8274313));
+      hosts.add(Host('1', 'Starbucks', 52.1655636, 20.7725414));
+      hosts.add(Host('2', 'Costa Coffee', 52.235547, 20.957479));
+      hosts.add(Host('3', 'Caffe Nero', 52.157802, 21.032832));
       return MapWidget(hosts: hosts);
     } else {
       return Center(child: Text('Home'));
