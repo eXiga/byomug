@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:byomug/login.dart';
 
 void main() => runApp(MaterialApp(
-      initialRoute: '/home',
+      initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
         '/home': (context) => HomeScreen()

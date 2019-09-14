@@ -14,65 +14,74 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-
     return Scaffold(
-      body: Column(
-        children: <Widget>[
-           Container(
-            child: Padding(
-              padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 60.0),
-              child: Column(
+      body: Container(
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage('assets/logo.png'),
+            fit: BoxFit.cover
+          )
+        ),
+        child: Padding(
+          padding: EdgeInsets.only(left: 28.0, right: 28.0, top: 60.0, bottom: 15.0),
+          child: Column(
+            children: <Widget>[
+              Row(
                 children: <Widget>[
-                  Row(
-                    children: <Widget>[
-                      Text("BYOM",
-                          style: TextStyle(
-                                  fontFamily: "AT",
-                                  fontSize: 30,
-                                  fontWeight: FontWeight.bold
-                                )
-                      )
-                    ],
+                  Text("BYOM",
+                      style: TextStyle(
+                              fontFamily: "AT",
+                              fontSize: 30,
+                              fontWeight: FontWeight.bold
+                            )
                   ),
-                  FormCard(),
-                  SizedBox(
-                    height: 30,
-                  ),
-                  InkWell(
-                    child: Container(
-                      width: double.infinity,
-                      height: 50,
-                      decoration: BoxDecoration(
-                          gradient: LinearGradient(colors: [
-                            Colors.greenAccent,
-                            Colors.green
-                          ]),
-                          borderRadius: BorderRadius.circular(6.0),
-                          boxShadow: [
-                            BoxShadow(
-                                color: Colors.green.withOpacity(.3),
-                                offset: Offset(0.0, 8.0),
-                                blurRadius: 8.0)
-                          ]),
-                      child: Material(
-                        color: Colors.transparent,
-                        child: InkWell(
-                          onTap: () {
-                            Navigator.pushReplacementNamed(context, '/home');
-                          },
-                          child: Center(
-                            child: Text("Sign in",
-                                style: TextStyle(
-                                    color: Colors.white,
-                                    fontFamily: "AT",
-                                    fontSize: 22)
-                                ),
-                          ),
-                        ),
+                ],
+              ),
+              SizedBox(
+                height: 100,
+              ),
+              FormCard(),
+              SizedBox(
+                height: 20,
+              ),
+              InkWell(
+                child: Container(
+                  width: double.infinity,
+                  height: 50,
+                  decoration: BoxDecoration(
+                      gradient: LinearGradient(colors: [
+                        Colors.greenAccent,
+                        Colors.green
+                      ]),
+                      borderRadius: BorderRadius.circular(6.0),
+                      boxShadow: [
+                        BoxShadow(
+                            color: Colors.green.withOpacity(.3),
+                            offset: Offset(0.0, 8.0),
+                            blurRadius: 8.0)
+                      ]),
+                  child: Material(
+                    color: Colors.transparent,
+                    child: InkWell(
+                      onTap: () {
+                        Navigator.pushReplacementNamed(context, '/home');
+                      },
+                      child: Center(
+                        child: Text("Sign in",
+                            style: TextStyle(
+                                color: Colors.white,
+                                fontFamily: "AT",
+                                fontSize: 22)
+                            ),
                       ),
                     ),
                   ),
-                  Row(
+                ),
+              ),
+              Expanded(
+                child: Align(
+                  alignment: Alignment.bottomCenter,
+                  child: Row(
                     mainAxisAlignment: MainAxisAlignment.center,
                     children: <Widget>[
                       Text('Not user yet?', 
@@ -84,7 +93,9 @@ class _LoginPageState extends State<LoginPage> {
                       ),
                       Text(' '),
                       InkWell(
-                        onTap: () {},
+                        onTap: () {
+                          Navigator.pushReplacementNamed(context, '/home');
+                        },
                         child: Text(
                           "Sign up!",
                           style: TextStyle(
@@ -97,11 +108,11 @@ class _LoginPageState extends State<LoginPage> {
                       )
                     ],
                   )
-                ]
+                )
               )
-            )
-          ),
-        ],
+            ]
+          )
+        )
       ),
     );
   }

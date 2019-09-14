@@ -5,9 +5,9 @@ class FormCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return new Container(
       width: double.infinity,
-      height: 300,
+      height: 220,
       decoration: BoxDecoration(
-          color: Colors.white,
+          color: Colors.green.withOpacity(.25),
           borderRadius: BorderRadius.circular(8.0),
           boxShadow: [
             BoxShadow(
@@ -27,12 +27,11 @@ class FormCard extends StatelessWidget {
             Text("Login",
                 style: TextStyle(
                   color: Colors.green,
-                  fontSize: 26,
-                  fontFamily: "AT",
-                  letterSpacing: .6)
+                  fontSize: 23,
+                  fontFamily: "AT")
             ),
             SizedBox(
-              height: 16,
+              height: 15,
             ),
             Text("Username",
                 style: TextStyle(
@@ -52,13 +51,15 @@ class FormCard extends StatelessWidget {
                 hintStyle: TextStyle(color: Colors.green, fontSize: 12.0)),
             ),
             SizedBox(
-              height: 16,
+              height: 15,
             ),
             Text("Password",
                 style: TextStyle(
                   color: Colors.green,
                   fontFamily: "AT",
-                  fontSize: 20)),
+                  fontSize: 20
+                )
+            ),
             TextField(
               obscureText: true,
               decoration: InputDecoration(
@@ -71,21 +72,6 @@ class FormCard extends StatelessWidget {
                 hintText: "Password",
                 hintStyle: TextStyle(color: Colors.green, fontSize: 12.0)),
             ),
-            SizedBox(
-              height: 36,
-            ),
-            Row(
-              mainAxisAlignment: MainAxisAlignment.end,
-              children: <Widget>[
-                Text(
-                  "Forgot Password?",
-                  style: TextStyle(
-                    color: Colors.green,
-                    fontFamily: "AT",
-                    fontSize: 16),
-                )
-              ],
-            )
           ],
         ),
       ),
