@@ -1,11 +1,9 @@
-import 'dart:convert';
-
 import 'package:byomug/decorations/gradient-box-decoration.dart';
 import 'package:byomug/widgets/alert.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart' as http;
 import 'package:byomug/widgets/card.dart';
 import 'package:byomug/models/client.dart';
+import 'package:byomug/services/user-service.dart';
 
 class RegistrationPage extends StatefulWidget {
   RegistrationPage({Key key, this.title}) : super(key: key);
@@ -91,7 +89,7 @@ class _RegistrationPageState extends State<RegistrationPage> {
                         ).toJson();
 
                         try {
-                          var user = await registerUser(string);
+                          var user = await UserService.registerUser(string);
                           setState(() {
                             isLoading = false;
                           });
@@ -131,17 +129,5 @@ class _RegistrationPageState extends State<RegistrationPage> {
   @override
   Widget build(BuildContext context) {
     return _pageToDisplay;
-  }
-}
-
-Future<Client> registerUser(Map body) async {
-  final response = await http.post(
-    'https://byomug.herokuapp.com/users/register',  body: body);
-
-  if (response.statusCode != 200) {
-    throw('request failed :(');
-  } else {
-    var user = Client.fromJson(json.decode(response.body));
-    return user;
   }
 }

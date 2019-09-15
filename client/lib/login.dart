@@ -1,12 +1,10 @@
-import 'dart:convert';
-
 import 'package:byomug/decorations/gradient-box-decoration.dart';
 import 'package:byomug/home-client.dart';
 import 'package:byomug/widgets/alert.dart';
 import 'package:flutter/material.dart';
 import 'package:byomug/widgets/card.dart';
 import 'package:byomug/models/client.dart';
-import 'package:http/http.dart' as http;
+import 'package:byomug/services/user-service.dart';
 
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
@@ -91,7 +89,7 @@ class _LoginPageState extends State<LoginPage> {
                         ).toJson();
 
                         try {
-                          var user = await authenticateUser(string);
+                          var user = await UserService.authenticateUser(string);
                           setState(() {
                             isLoading = false;
                           });
@@ -173,14 +171,3 @@ class _LoginPageState extends State<LoginPage> {
   }
 }
 
-Future<Client> authenticateUser(Map body) async {
-  final response = await http.post(
-    'https://byomug.herokuapp.com/users/authenticate',  body: body);
-
-  if (response.statusCode != 200) {
-    throw('request failed :(');
-  } else {
-    var user = Client.fromJson(json.decode(response.body));
-    return user;
-  }
-}
