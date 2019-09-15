@@ -6,6 +6,8 @@ import 'package:byomug/widgets/card.dart';
 import 'package:byomug/models/client.dart';
 import 'package:byomug/services/user-service.dart';
 
+import 'home-host.dart';
+
 class LoginPage extends StatefulWidget {
   LoginPage({Key key, this.title}) : super(key: key);
 
@@ -94,7 +96,11 @@ class _LoginPageState extends State<LoginPage> {
                             isLoading = false;
                           });
                           if (user.isHost) {
-                            Navigator.pushReplacementNamed(context, '/home_host');
+                            Navigator.pushReplacementNamed(
+                              context,
+                              '/home_host',
+                              arguments: HomeHostScreenArguments(user.id)
+                            );
                           } else {
                             Navigator.pushReplacementNamed(
                               context,

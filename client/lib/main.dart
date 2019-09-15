@@ -9,9 +9,14 @@ void main() => runApp(MaterialApp(
       initialRoute: '/',
       routes: {
         '/': (context) => LoginPage(),
-        '/home_host': (context) => HomeHostScreen(),
+        '/home_host': (context) {
+          final HomeHostScreenArguments arguments =
+              ModalRoute.of(context).settings.arguments;
+          return HomeHostScreen(hostId: arguments.hostId);
+        },
         '/home_client': (context) {
-          final HomeClientScreenArguments arguments = ModalRoute.of(context).settings.arguments;
+          final HomeClientScreenArguments arguments =
+              ModalRoute.of(context).settings.arguments;
           return HomeClientScreen(client: arguments.client);
         },
         '/register': (context) => RegistrationPage()
