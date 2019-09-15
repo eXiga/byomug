@@ -1,6 +1,7 @@
 import 'dart:convert';
 
 import 'package:byomug/decorations/gradient-box-decoration.dart';
+import 'package:byomug/home-client.dart';
 import 'package:byomug/widgets/alert.dart';
 import 'package:flutter/material.dart';
 import 'package:byomug/widgets/card.dart';
@@ -18,8 +19,8 @@ class LoginPage extends StatefulWidget {
 
 class _LoginPageState extends State<LoginPage> {
 
-  final userNameFieldController = TextEditingController();
-  final passwordFieldController = TextEditingController();
+  final userNameFieldController = TextEditingController(text: "akostenich@pochta.com");
+  final passwordFieldController = TextEditingController(text: "123321");
   var isLoading = false;
 
   Widget get _pageToDisplay {
@@ -61,9 +62,9 @@ class _LoginPageState extends State<LoginPage> {
               FormCard(
                 title: 'Login', 
                 opacity: 0.8,
-                 backgroundColor: Colors.white,
-                 userNameFieldController: this.userNameFieldController,
-                 passwordFieldController: this.passwordFieldController
+                backgroundColor: Colors.white,
+                userNameFieldController: this.userNameFieldController,
+                passwordFieldController: this.passwordFieldController
               ),
               SizedBox(
                 height: 20,
@@ -85,7 +86,7 @@ class _LoginPageState extends State<LoginPage> {
                         });
 
                         var string = Client(
-                          name: this.userNameFieldController.text,
+                          username: this.userNameFieldController.text,
                           password: this.passwordFieldController.text
                         ).toJson();
 
@@ -97,7 +98,11 @@ class _LoginPageState extends State<LoginPage> {
                           if (user.isHost) {
                             Navigator.pushReplacementNamed(context, '/home_host');
                           } else {
-                            Navigator.pushReplacementNamed(context, '/home_client');
+                            Navigator.pushReplacementNamed(
+                              context,
+                              '/home_client',
+                              arguments: HomeClientScreenArguments(user)
+                            );
                           }
                         } catch (e) {
                           setState(() {

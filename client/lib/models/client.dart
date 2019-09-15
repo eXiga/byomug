@@ -17,10 +17,10 @@ class Client {
   Client.fromJson(Map<String, dynamic> json)
       : name = "",
         id = json['_id'],
-        isHost = json['isHost'],
+        isHost = false,
         token = json['token'],
         username = json['name'],
         password = "";
 
-  Map<String, dynamic> toJson() => {'name': username, 'password': password};
+  Map<String, dynamic> toJson() => {'username': username, 'password': password};
 }

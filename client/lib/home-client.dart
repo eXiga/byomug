@@ -4,6 +4,12 @@ import 'package:flutter/material.dart';
 import 'widgets/client-info.dart';
 import 'widgets/hosts-map.dart';
 
+class HomeClientScreenArguments {
+  final Client client;
+
+  HomeClientScreenArguments(this.client);
+}
+
 class HomeClientScreen extends StatefulWidget {
   @override
   _HomeClientScreenState createState() => _HomeClientScreenState();
@@ -20,12 +26,12 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
     });
   }
 
-  Widget getBody() {
+  Widget getBody(BuildContext context) {
     if (MAP_INDEX == selectedIndex) {
       return HostsMapWidget();
     } else {
-      Client client = Client(id: '1', name: 'Rebecca');
-      return ClientInfoWidget(client: client);
+      final HomeClientScreenArguments args = ModalRoute.of(context).settings.arguments;
+      return ClientInfoWidget(client: args.client);
     }
   }
 
@@ -35,7 +41,7 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
       appBar: AppBar(
         title: const Text('byomug'),
       ),
-      body: getBody(),
+      body: getBody(context),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
