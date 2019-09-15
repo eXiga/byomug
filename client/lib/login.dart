@@ -1,5 +1,7 @@
 import 'dart:convert';
 
+import 'package:byomug/decorations/gradient-box-decoration.dart';
+import 'package:byomug/widgets/alert.dart';
 import 'package:flutter/material.dart';
 import 'package:byomug/widgets/card.dart';
 import 'package:byomug/models/client.dart';
@@ -70,18 +72,10 @@ class _LoginPageState extends State<LoginPage> {
                 child: Container(
                   width: double.infinity,
                   height: 50,
-                  decoration: BoxDecoration(
-                      gradient: LinearGradient(colors: [
-                        Colors.greenAccent,
-                        Colors.green
-                      ]),
-                      borderRadius: BorderRadius.circular(6.0),
-                      boxShadow: [
-                        BoxShadow(
-                            color: Colors.green.withOpacity(.3),
-                            offset: Offset(0.0, 8.0),
-                            blurRadius: 8.0)
-                      ]),
+                  decoration: GradientBoxDecoration.build(
+                    Colors.greenAccent, 
+                    Colors.green
+                  ),
                   child: Material(
                     color: Colors.transparent,
                     child: InkWell(
@@ -112,18 +106,7 @@ class _LoginPageState extends State<LoginPage> {
                           showDialog(
                             context: context,
                             builder: (context) {
-                              return AlertDialog(
-                                title: Text('Something went wrong :('),
-                                content: Text('Request failed'),
-                                actions: <Widget>[
-                                  new FlatButton(
-                                    child: Text('Ok'),
-                                    onPressed: () {
-                                      Navigator.of(context).pop();
-                                    },
-                                  )
-                                ],
-                              );
+                              return ErrorAlert();
                             }
                           );
                         }  
