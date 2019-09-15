@@ -93,7 +93,7 @@ class _LoginPageState extends State<LoginPage> {
                           setState(() {
                             isLoading = false;
                           });
-                          if (false) {
+                          if (user.isHost) {
                             Navigator.pushReplacementNamed(context, '/home_host');
                           } else {
                             Navigator.pushReplacementNamed(

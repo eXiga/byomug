@@ -47,7 +47,7 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
   }
 
   Future<List<Host>> fetchHosts() async {
-    final response = await http.get('https://byomug.herokuapp.com/hosts');
+    final response = await http.get('https://byomug.herokuapp.com/users/hosts');
     print(response.statusCode);
     if (response.statusCode == 200) {
       final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
