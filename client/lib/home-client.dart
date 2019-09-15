@@ -1,8 +1,8 @@
-import 'package:byomug/models/host.dart';
+import 'package:byomug/models/client.dart';
 import 'package:flutter/material.dart';
 
-import 'widgets/map.dart';
-import 'widgets/qr-code-display.dart';
+import 'widgets/client-info.dart';
+import 'widgets/hosts-map.dart';
 
 class HomeClientScreen extends StatefulWidget {
   @override
@@ -22,14 +22,10 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
 
   Widget getBody() {
     if (MAP_INDEX == selectedIndex) {
-      List<Host> hosts = List();
-      hosts.add(Host('1', 'Starbucks', 52.1655636, 20.7725414));
-      hosts.add(Host('2', 'Costa Coffee', 52.235547, 20.957479));
-      hosts.add(Host('3', 'Caffe Nero', 52.157802, 21.032832));
-      return MapWidget(hosts: hosts);
+      return HostsMapWidget();
     } else {
-      String id = '1';
-      return QrCodeDisplayWidget(id: id);
+      Client client = Client(id: '1', name: 'Rebecca');
+      return ClientInfoWidget(client: client);
     }
   }
 
