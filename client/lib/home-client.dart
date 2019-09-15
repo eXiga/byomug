@@ -1,8 +1,13 @@
+import 'dart:convert';
+
 import 'package:byomug/models/client.dart';
 import 'package:flutter/material.dart';
 
+import 'models/host.dart';
+import 'models/summary.dart';
 import 'widgets/client-info.dart';
 import 'widgets/hosts-map.dart';
+import 'package:http/http.dart' as http;
 
 class HomeClientScreenArguments {
   final Client client;
@@ -11,6 +16,10 @@ class HomeClientScreenArguments {
 }
 
 class HomeClientScreen extends StatefulWidget {
+  final Client client;
+
+  HomeClientScreen({Key key, this.client}) : super(key: key);
+
   @override
   _HomeClientScreenState createState() => _HomeClientScreenState();
 }
@@ -18,20 +27,56 @@ class HomeClientScreen extends StatefulWidget {
 class _HomeClientScreenState extends State<HomeClientScreen> {
   static const MAP_INDEX = 1;
 
-  int selectedIndex = 0;
+  int _selectedTabIndex = 0;
+  Summary _summary;
+  List<Host> _hosts = List();
 
-  void onItemTapped(int index) {
-    setState(() {
-      selectedIndex = index;
+  @override
+  void initState() {
+    super.initState();
+    fetchSummary(widget.client.id).then((summary) {
+      setState(() {
+        _summary = summary;
+      });
+    });
+    fetchHosts().then((hosts) {
+      setState(() {
+        _hosts = hosts;
+      });
     });
   }
 
-  Widget getBody(BuildContext context) {
-    if (MAP_INDEX == selectedIndex) {
-      return HostsMapWidget();
+  Future<List<Host>> fetchHosts() async {
+    final response = await http.get('https://byomug.herokuapp.com/hosts');
+    print(response.statusCode);
+    if (response.statusCode == 200) {
+      final parsed = json.decode(response.body).cast<Map<String, dynamic>>();
+      return parsed.map<Host>((json) => Host.fromJson(json)).toList();
     } else {
-      final HomeClientScreenArguments args = ModalRoute.of(context).settings.arguments;
-      return ClientInfoWidget(client: args.client);
+      throw Exception('Failed to load hosts');
+    }
+  }
+
+  Future<Summary> fetchSummary(String id) async {
+    final response = await http.get('https://byomug.herokuapp.com/users/$id/summary');
+    if (response.statusCode == 200) {
+      return Summary.fromJson(json.decode(response.body));
+    } else {
+      throw Exception('Failed to load summary');
+    }
+  }
+
+  void onItemTapped(int index) {
+    setState(() {
+      _selectedTabIndex = index;
+    });
+  }
+
+  Widget createBody(BuildContext context) {
+    if (MAP_INDEX == _selectedTabIndex) {
+      return HostsMapWidget(hosts: _hosts);
+    } else {
+      return ClientInfoWidget(client: widget.client, summary: _summary);
     }
   }
 
@@ -41,7 +86,7 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
       appBar: AppBar(
         title: const Text('byomug'),
       ),
-      body: getBody(context),
+      body: createBody(context),
       bottomNavigationBar: BottomNavigationBar(
         items: const <BottomNavigationBarItem>[
           BottomNavigationBarItem(
@@ -53,7 +98,7 @@ class _HomeClientScreenState extends State<HomeClientScreen> {
             title: Text('Map'),
           ),
         ],
-        currentIndex: selectedIndex,
+        currentIndex: _selectedTabIndex,
         selectedItemColor: Colors.green,
         onTap: onItemTapped,
       ),

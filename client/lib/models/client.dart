@@ -2,7 +2,6 @@ class Client {
   final String name;
   final String token;
   final String id;
-  final bool isHost;
   final String username;
   final String password;
 
@@ -10,16 +9,14 @@ class Client {
       {this.name,
       this.token,
       this.id,
-      this.isHost,
       this.username,
       this.password});
 
   Client.fromJson(Map<String, dynamic> json)
-      : name = "",
+      : name = json['name'],
         id = json['_id'],
-        isHost = false,
         token = json['token'],
-        username = json['name'],
+        username = json['username'],
         password = "";
 
   Map<String, dynamic> toJson() => {'username': username, 'password': password};

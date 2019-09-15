@@ -10,7 +10,10 @@ void main() => runApp(MaterialApp(
       routes: {
         '/': (context) => LoginPage(),
         '/home_host': (context) => HomeHostScreen(),
-        '/home_client': (context) => HomeClientScreen(),
+        '/home_client': (context) {
+          final HomeClientScreenArguments arguments = ModalRoute.of(context).settings.arguments;
+          return HomeClientScreen(client: arguments.client);
+        },
         '/register': (context) => RegistrationPage()
       },
       title: 'byomug',
